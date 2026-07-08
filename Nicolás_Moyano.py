@@ -53,6 +53,18 @@ def cupos_tipo(planes, inscripciones, tipo):
     else:
         print("Tipo de plan no registrado.")
 
+def busqueda_precio(planes, inscripciones, p_min, p_max):
+    lista_planes = []
+    for plan, registro in inscripciones.items():
+        if registro[0] >= p_min and registro[0] <= p_max and registro[1] > 0:
+            for plan_reg, nombre in planes.items():
+                if plan_reg == plan:
+                    lista_planes.append(f"{nombre[0]}--{plan_reg}")
+    if len(lista_planes) > 0:
+        for i in lista_planes:
+            print(i)
+    else:
+        print("No hay planes en ese rango de precios\n")
 
 while opcion != 6:
     opcion = leer_opcion()
@@ -65,6 +77,14 @@ while opcion != 6:
         
         case 2:
             print("\n>>> Busqueda de planes por rango de precio")
+            while True:
+                try:
+                    p_minimo = int(input("\nIngrese el precio minimo: "))
+                    p_maximo = int(input("\nIngrese el precio maximo: "))
+                    if p_minimo >= 0 and p_maximo >= 0 and p_maximo > p_minimo:
+                        busqueda_precio(planes, inscripciones, p_minimo, p_maximo)
+                except ValueError:
+                    print("Ingrese un valor numerico entero\n")
             input("\nPresione [ENTER] para continuar.\n")
         
         case 3:
