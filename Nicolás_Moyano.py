@@ -117,7 +117,7 @@ while opcion != 6:
                             print("\nERROR: Debe ingresar un número entero positivo.")
                     except ValueError:
                         print("\nERROR: Debe ingresar un número entero positivo.")
-                input("\nPresione [ENTER] para continuar.\n")
+                        input("\nPresione [ENTER] para continuar.\n")
                 existe = actualizar_precio(inscripciones, codigo_buscar, nuevo_precio)
                 if existe == True:
                     print("Precio actualizado.")
@@ -131,6 +131,16 @@ while opcion != 6:
 
         case 4:
             print("\n>>> Agregar plan\n")
+            codigo = input("Ingrese el codigo del nuevo plan:\n").upper().strip()
+            nombre = input(f"Ingrese el nombre de {codigo}:\n").title().strip()
+            tipo = input(f"Ingrese el tipo para {nombre}:\n").lower().strip()
+            duracion = input(f"Ingrese la duracion de {nombre}:\n")
+            acceso_piscina = input(f"El plan {nombre} incluye acceso a piscina? (s/n)\n").lower().strip()
+            incluye_clases = input(f"El plan {nombre} incluye clases? (s/n)\n").lower().strip()
+            horario = input(f"ingrese el horario:\n").lower().strip()
+            precio = input("Ingrese el precio del plan:\n")
+            cupos = input("Ingrese la cantidad de cupos para el plan:\n")
+            
             input("\nPresione [ENTER] para continuar.")
 
         case 5:
