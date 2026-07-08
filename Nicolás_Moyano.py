@@ -163,6 +163,14 @@ def agregar_plan(planes, inscripciones, codigo, nombre, tipo, duracion, acceso_p
     inscripciones[codigo] = [precio, cupos]
     return True
     
+def eliminar_plan(planes, inscripciones, codigo_elim):
+    esta = buscar_codigo(inscripciones, codigo_elim)
+    if esta == True:
+        del planes[codigo_elim]
+        del inscripciones[codigo_elim]
+        return True
+    else:
+        return False  
 
 while opcion != 6:
     opcion = leer_opcion()
@@ -181,6 +189,7 @@ while opcion != 6:
                     p_maximo = int(input("\nIngrese el precio maximo: "))
                     if p_minimo >= 0 and p_maximo >= 0 and p_maximo > p_minimo:
                         busqueda_precio(planes, inscripciones, p_minimo, p_maximo)
+                        break
                 except ValueError:
                     print("Ingrese un valor numerico entero\n")
             input("\nPresione [ENTER] para continuar.\n")
@@ -264,6 +273,12 @@ while opcion != 6:
 
         case 5:
             print("\n>>> Eliminar plan\n")
+            codigo_elim = input("Ingrese codigo a eliminar:\n").upper().strip()
+            eliminado = eliminar_plan(planes, inscripciones, codigo_elim)
+            if eliminado == True:
+                print("Plan eliminado.")
+            else:
+                print("El código no existe.")
             input("\nPresione [ENTER] para continuar.")
 
         case 6:
