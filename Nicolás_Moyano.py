@@ -82,6 +82,88 @@ def actualizar_precio(inscripciones, codigo_busc, nuevo_precio):
     else:
         return False        
 
+def val_codigo(codigo):
+    if len(codigo) == 0:
+        return False
+    else:
+        return True
+    
+def val_nombre(nombre):
+    if len(nombre) == 0:
+        return False
+    else:
+        return True
+    
+def val_tipo(tipo):
+    if tipo != "mensual" and tipo != "trimestral" and tipo != "anual":
+        return False
+    else:
+        return True
+    
+def val_duracion(duracion):
+    try:
+        duracion_int = int(duracion)
+        if duracion_int > 0:
+            return True
+        else: 
+            return False
+    except ValueError:
+        return False
+    
+def val_accpiscina(acceso_piscina):
+    if acceso_piscina == "s":
+        return True
+    elif acceso_piscina == "n":
+        return False
+    else:
+        return None
+    
+def val_clases(incluye_clases):
+    if incluye_clases == "s":
+        return True
+    elif incluye_clases == "n":
+        return False
+    else:
+        return None
+    
+def val_horario(horario):
+    if len(horario) == 0:
+        return False
+    else:
+        return True
+    
+def val_precio(precio):
+    try:
+        precio_int = int(precio)
+        if precio_int > 0:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
+    
+def val_cupos(cupos):
+    try:
+        cupos_int = int(cupos)
+        if cupos_int >= 0:
+            return True
+        else:
+            return False
+    except ValueError: 
+        return False
+
+def agregar_plan(planes, inscripciones, codigo, nombre, tipo, duracion, acceso_piscina, incluye_clases, horario, precio, cupos):
+    for code_plan in planes.keys():
+        if code_plan == codigo:
+            return False
+    bool_piscina = val_accpiscina(acceso_piscina)
+    bool_clases = val_clases(incluye_clases)
+    
+    planes[codigo] = [nombre, tipo, duracion, bool_piscina, bool_clases, horario]
+    inscripciones[codigo] = [precio, cupos]
+    return True
+    
+
 while opcion != 6:
     opcion = leer_opcion()
     match opcion:
@@ -133,13 +215,50 @@ while opcion != 6:
             print("\n>>> Agregar plan\n")
             codigo = input("Ingrese el codigo del nuevo plan:\n").upper().strip()
             nombre = input(f"Ingrese el nombre de {codigo}:\n").title().strip()
-            tipo = input(f"Ingrese el tipo para {nombre}:\n").lower().strip()
-            duracion = input(f"Ingrese la duracion de {nombre}:\n")
+            tipo = input(f"Ingrese el tipo para {nombre}: (mensual/trimestral/anual)\n").lower().strip()
+            duracion = input(f"Ingrese la duracion de {nombre} (meses):\n")
             acceso_piscina = input(f"El plan {nombre} incluye acceso a piscina? (s/n)\n").lower().strip()
             incluye_clases = input(f"El plan {nombre} incluye clases? (s/n)\n").lower().strip()
             horario = input(f"ingrese el horario:\n").lower().strip()
             precio = input("Ingrese el precio del plan:\n")
             cupos = input("Ingrese la cantidad de cupos para el plan:\n")
+
+            codigo_val = val_codigo(codigo)
+            nombre_val = val_nombre(nombre)
+            tipo_val = val_tipo(tipo)
+            duracion_val = val_duracion(duracion)
+            accpiscina_val = val_accpiscina(acceso_piscina)
+            incclases_val = val_clases(incluye_clases)
+            horario_val = val_horario(horario)
+            precio_val = val_precio(precio)
+            cupos_val = val_cupos(cupos)
+
+            if codigo_val == True and nombre_val == True and tipo_val == True and duracion_val == True and horario_val == True and precio_val == True and cupos_val == True:
+                existe = agregar_plan(planes, inscripciones, codigo, nombre, tipo, duracion, acceso_piscina, incluye_clases, horario, precio, cupos)
+            else: 
+                print("hola")
+            if existe == True: 
+                print("Plan agregado.")
+            else:
+                print("El código ya existe.")
+            if codigo_val == False:
+                print("ERROR: Codigo ingresado invalido.")    
+            if nombre_val == False:
+                print("ERROR: nombre ingresado invalido.")
+            if tipo_val == False:
+                print("ERROR: Tipo ingresado invalido.")
+            if duracion_val == False:
+                print("ERROR: Duración ingresado invalido.")    
+            if accpiscina_val is None:
+                print("ERROR: El ingreso de acceso a piscina invalido.")
+            if incclases_val is None:
+                print("ERROR: El ingreso de clases es invalido.")
+            if horario_val == False:
+                print("ERROR: Horario ingresado invalido.")  
+            if precio_val == False:
+                print("ERROR: Precio ingresado invalido.")  
+            if cupos_val == False:
+                print("ERROR: Cupos ingresado invalido.")                      
             
             input("\nPresione [ENTER] para continuar.")
 
