@@ -66,6 +66,22 @@ def busqueda_precio(planes, inscripciones, p_min, p_max):
     else:
         print("No hay planes en ese rango de precios\n")
 
+def buscar_codigo(inscripciones, codigo_busc):
+    for codigo in inscripciones.keys():
+        if codigo == codigo_busc:
+            return True
+    return False
+
+def actualizar_precio(inscripciones, codigo_busc, nuevo_precio):
+    existe = buscar_codigo(inscripciones, codigo_busc)
+    if existe == True:
+        for codigo, precio in inscripciones.items():
+            if codigo == codigo_busc:
+                precio[0] = nuevo_precio
+                return True
+    else:
+        return False        
+
 while opcion != 6:
     opcion = leer_opcion()
     match opcion:
@@ -89,7 +105,29 @@ while opcion != 6:
         
         case 3:
             print("\n>>> Actualizar precio de plan")
-            input("\nPresione [ENTER] para continuar.\n")
+            repetir = "a"
+            while repetir != "n":
+                codigo_buscar = input("\nIngrese el codigo del plan: ").upper().strip()
+                while True:
+                    try:    
+                        nuevo_precio = int(input(f"\nIngrese el nuevo precio para {codigo_buscar}: "))
+                        if nuevo_precio > 0:
+                            break
+                        else:
+                            print("\nERROR: Debe ingresar un número entero positivo.")
+                    except ValueError:
+                        print("\nERROR: Debe ingresar un número entero positivo.")
+                input("\nPresione [ENTER] para continuar.\n")
+                existe = actualizar_precio(inscripciones, codigo_buscar, nuevo_precio)
+                if existe == True:
+                    print("Precio actualizado.")
+                else:
+                    print("El código no existe")
+                
+                repetir = input("¿Desea actualizar otro precio (s/n)? ").lower().strip()
+                if repetir != "s" and repetir != "n":
+                    print("Ingrese una Opción valida (s/n).")
+                    input("\nPresione [ENTER] para continuar.")
 
         case 4:
             print("\n>>> Agregar plan\n")
