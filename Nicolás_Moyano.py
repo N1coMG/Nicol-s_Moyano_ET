@@ -16,6 +16,9 @@ inscripciones = {
 'F006': [18990, 15]
 }
 
+opcion = 0
+
+
 def leer_opcion():
     print("""
 ========== MENÚ PRINCIPAL ==========
@@ -32,4 +35,28 @@ def leer_opcion():
             opcion = int(input("Ingrese una opción: (1-6) "))
             return opcion
         except ValueError:
+            print("Debe seleccionar una opción válida.")
+
+
+while opcion != 6:
+    opcion = leer_opcion()
+    match opcion:
+        case 1:
+            input("\nPresione [ENTER] para continuar.\n")
+        
+        case 2:
+            input("\nPresione [ENTER] para continuar.\n")
+        
+        case 3:
+            input("\nPresione [ENTER] para continuar.\n")
+
+        case 4:
+            input("\nPresione [ENTER] para continuar.\n")
+
+        case 5:
+            input("\nPresione [ENTER] para continuar.\n")
+
+        case 6:
+            print("\nPrograma finalizado.")
+        case _:
             print("Debe seleccionar una opción válida.")
